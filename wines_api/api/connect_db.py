@@ -1,19 +1,24 @@
 from neo4j import GraphDatabase
 
 class Connection():
-
-	# init the connection with db
 	def __init__(self):
+		"""
+		Creates Neo4j connection
+		"""
 		self.driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "neo4j"))
 
-	#  close the driver connection
 	def close(self):
+		"""
+		Closes connection with Neo4j
+		"""
 		self.driver.close()
 
-	# take all varieties from db
-	@staticmethod
-	def _all_varieties(self, tx):
 
+	def _all_varietals(self, tx):
+		"""
+		Queries Neo4j to get all varietals
+		:return: varietals list	
+		"""
 		query = "MATCH (v:Class)-[:SUBCLASSOF]->(:Class {label: 'varietal'}) RETURN v.label AS varietal"
 
 		result = tx.run(query)
@@ -22,9 +27,11 @@ class Connection():
 
 		return varietals
 
-	# take all grapes and its growing region
-	@staticmethod
 	def _growing_grape_regions(self, tx):
+		"""
+		Queries Neo4j to get all grape and its growing region
+		:return: grape, region and region_of list
+		"""
 	
 		query = '''
 				MATCH (g:Class)-[:SUBCLASSOF]->(:Class {label:'varietal'}) 
@@ -39,6 +46,10 @@ class Connection():
 		return grape_regions
 
 	def _wine_types(self, tx):
+		"""
+		Queries Neo4j to get all wine types
+		:return: wine types list
+		"""
 		query = "MATCH (w:Class)-[:SUBCLASSOF*1..]->(:Class {label: 'wine'}) RETURN DISTINCT w.label AS wine"
 
 		result = tx.run(query)
@@ -47,7 +58,12 @@ class Connection():
 
 		return wine_types
 
-	def _find_wine(self,tx, colour, varietal, region):
+
+	def _find_wine(self, tx, colour, varietal, region):
+		"""
+		Queries Neo4j to get wines based on the colour, varietal and region
+		:return: wine found
+		"""
 		query = "MATCH (w:Class)-[:SUBCLASSOF*1..]->(:Class {label: 'wine'})"
 		query_return = " RETURN DISTINCT w.label AS wine"
 

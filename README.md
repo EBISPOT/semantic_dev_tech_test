@@ -60,18 +60,42 @@ Your code should:
 
 If you prefer, you may base your API on SPARQL queries of the OWL ontology in place of Cypher queries of the Neo4J database.
 
-You should include clear documentation on how to use your API.
+**You should include clear documentation on how to use your API.**
+
+To use Wine API, follow the next steps after having Neo4j with wine ontology running at http://localhost:7474.
+
+Run the API:
+
+```sh
+python wines_api/api/wines_api.py
+```
+
+The Wine API will be accessible at http://127.0.0.1:5000/
+
+
+* To get all grape growing regions use the endpoint `/all_grape_regions`
+
+* To get all varietals use the endpoint `/all_varietals`
+
+* To get all types of wine use the endpoint `/wines/all`
+
+* To query for a wine by colour, varietal and region use the endpoint `/wines?colour=<colour_name>&varietal=<varietal_name>&region=<region_name>`
+
+You can use any combination of these three arguments to query a wine, for example:
+
+* `/wines?varietal=<varietal_name>`
+* `/wines?colour=<colour_name>&region=<region_name>`
+* `/wines?colour=<colour_name>&varietal=<varietal_name>`
+
 
 ### Exercise 3:
 
 **Write a couple of paragraphs on how you might extend the OWL modeling and content to build a knowledge base of individual wines that would be useful to consumers trying to decide what wine to buy.**
 
-Include general description in the class wine
+Include the 5 characteristics of wine: sweetness, acidity, tannin levels, fruity flavor, light, or full-bodied.
 
-Include the 5 characteristics of wine: The Sweetness, Acidity, Tannin Levels, Fruity Flavor, Light or Full-Bodied
+Include other types of wine: Dessert Wine and Sparkling Wine.
 
-Include other types of wine: Dessert Wine and Sparkling Wine
+Include other types of varietal: Pinot noir, Pinot Grigio, Riesling, Cabernet Sauvignon, etc..
 
-Include other types of varietal
-
-Include dishes that go with specific types of wine
+Include dishes that go with specific types of wine.
