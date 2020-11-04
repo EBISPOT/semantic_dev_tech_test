@@ -1,15 +1,18 @@
 import pytest
-import requests
+from api.winesapi import app
 
-url = 'http://127.0.0.1:5000'
+@pytest.fixture
+def client():
+    return app.test_client()
+       
 
-def test_get_all_varieties():
-    r = requests.get(url+'/all_varieties')
-    data = r.json()
+def test_get_all_varietals(client):
+    r = client.get('/all_varietals')
+
+    data = r.get_json()
     response = data['data']
 
     assert r.status_code == 200
-
     assert response[0]['varietal'] == "Zinfandel"
     assert response[1]['varietal'] == "Chardonnay"
     assert response[2]['varietal'] == "Sangiovesse"
@@ -17,9 +20,9 @@ def test_get_all_varieties():
     assert response[4]['varietal'] == "Canaiolo"
     assert response[5]['varietal'] == "Nebbiolo"
 
-def test_get_all_growing_grape_regions():
-    r = requests.get(url+'/all_grape_regions')
-    data = r.json()
+def test_get_all_growing_grape_regions(client):
+    r = client.get('/all_grape_regions')
+    data = r.get_json()
     response = data['data']
 
     assert r.status_code == 200
@@ -48,9 +51,9 @@ def test_get_all_growing_grape_regions():
     assert response[5]['region'] == "Chianti"
     assert response[5]['region_of'] == "Italy"
    
-def test_get_all_wine_types():
-    r = requests.get(url+'/wines/all')
-    data = r.json()
+def test_get_all_wine_types(client):
+    r = client.get('/wines/all')
+    data = r.get_json()
     response = data['data']
 
     assert r.status_code == 200
@@ -64,9 +67,9 @@ def test_get_all_wine_types():
     assert response[6]['wine'] == "Chablis_wine"
     assert response[7]['wine'] == "French_wine"
 
-def test_search_red_wines():
-    r = requests.get(url+'/wines?colour=red')
-    data = r.json()
+def test_search_red_wines(client):
+    r = client.get('/wines?colour=red')
+    data = r.get_json()
     response = data['data']
     
     assert r.status_code == 200
@@ -75,9 +78,9 @@ def test_search_red_wines():
     assert response[1]['wine'] == "Barolo"
     assert response[2]['wine'] == "Barbaresco"
 
-def test_search_red_and_italian_wines():
-    r = requests.get(url+'/wines?colour=red&region=Italy')
-    data = r.json()
+def test_search_red_and_italian_wines(client):
+    r = client.get('/wines?colour=red&region=Italy')
+    data = r.get_json()
     response = data['data']
     
     assert r.status_code == 200
@@ -86,27 +89,27 @@ def test_search_red_and_italian_wines():
     assert response[1]['wine'] == "Barolo"
     assert response[2]['wine'] == "Barbaresco"
 
-def test_search_white_and_french_wines():
-    r = requests.get(url+'/wines?colour=white&region=France')
-    data = r.json()
+def test_search_white_and_french_wines(client):
+    r = client.get('/wines?colour=white&region=France')
+    data = r.get_json()
     response = data['data']
     
     assert r.status_code == 200
 
     assert response[0]['wine'] == "Chablis_wine"
 
-def test_search_red_nebbiolo_and_italian_wines():
-    r = requests.get(url+'/wines?colour=red&varietal=Nebbiolo&region=Italy')
-    data = r.json()
+def test_search_red_nebbiolo_and_italian_wines(client):
+    r = client.get('/wines?colour=red&varietal=Nebbiolo&region=Italy')
+    data = r.get_json()
     response = data['data']
     
     assert r.status_code == 200
 
     assert response[0]['wine'] == "Barolo"
 
-def test_search_rose_wines():
-    r = requests.get(url+'/wines?colour=rose')
-    data = r.json()
+def test_search_rose_wines(client):
+    r = client.get('/wines?colour=rose')
+    data = r.get_json()
         
     assert r.status_code == 404
 

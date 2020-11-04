@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from connect_db import Connection
+from api.connect_db import Connection
 
 app = Flask(__name__)
 
@@ -21,7 +21,7 @@ def all_varietals():
 	# close connection
 	conn.close()
 
-	response = jsonify({'data': varietals})
+	response = jsonify(data=varietals)
 	response.status_code= 200
 
 	# sending the data and code OK
@@ -113,9 +113,3 @@ def find_wine():
 		response.status_code = 404
 
 	return response
-
-
-
-if __name__ == '__main__':
-	# run the api
-    app.run()  

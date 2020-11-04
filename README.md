@@ -64,13 +64,21 @@ If you prefer, you may base your API on SPARQL queries of the OWL ontology in pl
 
 To use Wine API, follow the next steps after having Neo4j with wine ontology running at http://localhost:7474.
 
-Run the API:
+To run the API follow these steps:
 
 ```sh
-python wines_api/api/wines_api.py
+$ export FLASK_APP="api/winesapi"
+$ flask run
 ```
 
-The Wine API will be accessible at http://127.0.0.1:5000/
+In PowerShell:
+
+```sh
+> $env:FLASK_APP="api/winesapi"
+> python -m flask run
+```
+
+The Wine API should be accessible at http://127.0.0.1:5000/
 
 
 * To get all grape growing regions use the endpoint `/all_grape_regions`
