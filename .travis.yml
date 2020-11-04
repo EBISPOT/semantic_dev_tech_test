@@ -19,4 +19,4 @@ before_script:
 
 script:
   - python src/load_db.py $owl_file
-
+  - pytest -v
